@@ -1,4 +1,5 @@
 <script setup>
+import Label from '@/Components/Label.vue';
 import { ref } from 'vue';
 
 
@@ -8,7 +9,8 @@ function increment(){
 }
 </script>
 <template>
-    <button class="bg-red-600 p-4" @click="increment">
+    <Label value="hey"/>
+    <button class="p-4 bg-red-600" @click="increment">
         {{ count }}
     </button>
 </template>
