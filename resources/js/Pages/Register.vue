@@ -84,7 +84,7 @@ const submit = () => {
                 </div>
                 <!-- submit button -->
                 <div class="flex flex-row items-center justify-end w-full mt-3 gap-x-4">
-                    <a href="" class="underline cursor-pointer">or Login</a>
+                    <a  :href="route('login')" class="underline cursor-pointer">or Login</a>
                     <button type="submit" class="p-2 my-3 text-white rounded-md bg-mainTheme"
                         :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Register
