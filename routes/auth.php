@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Route;
 //         ->name('register');
 
 //     Route::post('register', [RegisteredUserController::class, 'store']);
-
+//     Route::get('/login', [UserLoginController::class, 'init'])->name('login');
+//     Route::post('/login', [UserLoginController::class, 'store'])->name('login');
 //     // Route::get('login', [AuthenticatedSessionController::class, 'create'])
 //     //             ->name('login');
 
@@ -42,6 +43,7 @@ Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
 });
 
 // Route::middleware('auth')->group(function () {
+//     Route::get('/home', [HomeController::class, 'init'])->name('home');
 //     Route::get('verify-email', EmailVerificationPromptController::class)
 //         ->name('verification.notice');
 
@@ -59,6 +61,7 @@ Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
 //     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
 //     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
+//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+//         ->name('logout');
 
 // });

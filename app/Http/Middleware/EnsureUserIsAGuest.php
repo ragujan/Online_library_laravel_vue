@@ -14,12 +14,10 @@ class EnsureUserIsAGuest
 
     public function handle(Request $request, Closure $next): Response
     {
+        // if the user is not logged in, then proceed else redirect to home page
         if (!Auth::check()) {
             return $next($request);
         } else {
-            $request->session()->invalidate();
-
-            $request->session()->regenerateToken();
             return redirect()->intended('home');
         }
     }

@@ -11,7 +11,6 @@ const logout = () => {
         }
     })
 }
-
 </script>
 
 <template>

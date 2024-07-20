@@ -39,7 +39,7 @@ const submit = () => {
         <div class="flex flex-row justify-center py-3">
             <img :src="logo" class="w-[250px] cursor-pointer" lt="">
         </div>
-        <section class="flex flex-col px-6 py-3 mx-auto bg-white rounded-md text-mainTheme gap-y-3 md:w-1/2">
+        <section class="flex flex-col px-6 py-3 mx-auto bg-white rounded-md text-mainTheme gap-y-3 md:w-1/3">
             <h2 class="pt-2 text-xl font-bold">User Registration</h2>
             <form @submit.prevent="submit">
                 <!-- email -->
