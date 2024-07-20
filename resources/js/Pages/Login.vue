@@ -12,23 +12,18 @@ function increment() {
     count.value++;
 }
 const form = useForm({
-    name: '',
     email: '',
     password: '',
-    password_confirmation: ''
 })
 const passwordVisible = ref(false);
-const confirmPasswordVisible = ref(false);
 const togglePasswordVisibility = () => {
     passwordVisible.value = !passwordVisible.value
 }
-const toggleConfirmPasswordVisibility = () => {
-    confirmPasswordVisible.value = !confirmPasswordVisible.value;
-}
+
 const submit = () => {
-    form.post(route("signup"), {
+    form.post(route("login"), {
         onFinish: () => {
-            form.reset('password_confirmation', 'password', 'email', 'name')
+            form.reset('password', 'email',)
         }
     })
 }
@@ -40,7 +35,7 @@ const submit = () => {
             <img :src="logo" class="w-[250px] cursor-pointer" lt="">
         </div>
         <section class="flex flex-col px-6 py-3 mx-auto bg-white rounded-md text-mainTheme gap-y-3 md:w-1/2">
-            <h2 class="pt-2 text-xl font-bold">User Registration</h2>
+            <h2 class="pt-2 text-xl font-bold">Login</h2>
             <form @submit.prevent="submit">
                 <!-- email -->
                 <div class="flex flex-col">
@@ -48,12 +43,7 @@ const submit = () => {
                     <CustomInput v-model="form.email" id="email" required autofocus autocomplete="email" />
                     <InputError class="mt-2" :message="form.errors.email" />
                 </div>
-                <!-- name -->
-                <div class="flex flex-col">
-                    <Label value="Name" for="name" />
-                    <CustomInput v-model="form.name" id="name" required autofocus autocomplete="name" />
-                    <InputError class="mt-2" :message="form.errors.name" />
-                </div>
+                
                 <!-- to display password and the hide option -->
                 <!-- password -->
                 <div class="flex items-center justify-between ">
@@ -68,26 +58,13 @@ const submit = () => {
                     </div>
 
                 </div>
-                <!-- password confirmation -->
-                <div class="flex items-center justify-between ">
-                    <div class="relative flex flex-col w-full ">
-                        <Label value="Password Confirmation" for="password_confirmation" />
-                        <CustomInput v-model="form.password_confirmation" id="password_confirmation"
-                            name="password_confirmation" :type="confirmPasswordVisible ? 'text' : 'password'" required
-                            autocomplete="new-password" />
-                        <InputError class="mt-2" :message="form.errors.password_confirmation" />
-                        <div class="absolute z-30 transform -translate-y-1/2 cursor-pointer top-3/4 right-2">
-                            <img class="w-[33px]" @click="toggleConfirmPasswordVisibility" :src="eyeIcon" />
-                        </div>
-                    </div>
-
-                </div>
+              
                 <!-- submit button -->
                 <div class="flex flex-row items-center justify-end w-full mt-3 gap-x-4">
-                    <a href="" class="underline cursor-pointer">or Login</a>
+                    <a href="" class="underline cursor-pointer">or Signup</a>
                     <button type="submit" class="p-2 my-3 text-white rounded-md bg-mainTheme"
                         :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Register
+                        Login
                     </button>
                 </div>
             </form>
