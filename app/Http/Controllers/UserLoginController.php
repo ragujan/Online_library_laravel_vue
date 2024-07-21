@@ -26,7 +26,7 @@ class UserLoginController extends Controller
 
         $request->authenticate();
         $request->session()->regenerate();
-        return redirect()->intended(route('home', absolute: false));
+        return redirect()->intended(route('retrieve-books', absolute: false));
     }
 
 }

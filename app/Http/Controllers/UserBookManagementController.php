@@ -29,7 +29,8 @@ class UserBookManagementController extends Controller
         // check if the book id exists in the user took book table
         $isInUserTookBook = UserTookBook::where('books_id',$bookid)->exists();
         if($isInUserTookBook || $book->is_taken){
-            return redirect()->back()->withErrors(["common_error" => "book already has been taken"], "book_error");
+            return "error" . $book->is_taken. " book in user took table ". $isInUserTookBook. " generated id ". $generatedId;
+            // return redirect()->back()->withErrors(["common_error" => "book already has been taken"], "book_error");
         }
         // create a new record
         $userHasBookEntry = UserTookBook::create([

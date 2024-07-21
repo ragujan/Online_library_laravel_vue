@@ -91,7 +91,7 @@ const borrowBook = (bookId: string) => {
     // alert("hey")
     // return;
     const objectToSent = {
-        book_id: bookId
+        book_id: "D1002"
     };
     router.post(route("borrowBook"), objectToSent);
 }
@@ -129,7 +129,6 @@ const clearSuccessMessage = () => {
         <div class="flex flex-row justify-start px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
             <a :href="route('retrieveBooks')">Browse Books</a>
             <a :href="route('retrieveBorrowedBooks')">My Books</a>
-            <span @click="logout">Log out</span>
         </div>
 
         <div class="p-4">
@@ -188,7 +187,9 @@ const clearSuccessMessage = () => {
                             <td class="p-4 text-left">{{ book.title }}</td>
                             <td class="p-4 text-left">{{ book.description }}</td>
                             <td class="p-4 text-left">{{ book.book_genre }}</td>
-                            <td class="p-4 text-left"><button class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme" @click="borrowBook(book.id)">Borrow</button></td>
+                            <td class="p-4 text-left"><button
+                                    class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme"
+                                    @click="borrowBook(book.id)">Borrow</button></td>
                         </tr>
                     </tbody>
                 </table>

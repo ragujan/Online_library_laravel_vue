@@ -27,6 +27,7 @@ use Inertia\Inertia;
 Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
     Route::get('/retrieve-books', [BookAccessController::class, 'retrieveBooks'])->name('retrieveBooks');
     Route::post('/borrow-book', [UserBookManagementController::class, 'borrowBookToUser'])->name('borrowBook');
+    Route::get('/retrieve-borrowed-books', [BookAccessController::class, 'retrieveBorrowedBooks'])->name('retrieveBorrowedBooks');
 });
 
 // Route::middleware('auth')->group(function () {
