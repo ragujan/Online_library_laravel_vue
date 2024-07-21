@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { BookData, BookGenre } from '@/types';
 import PaginationButton from '@/Components/PaginationButtonSection.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps<{ data: BookData[], book_genres: BookGenre[], total_pages: number, page_number: number }>();
 const logout = () => {
@@ -18,6 +18,8 @@ const logout = () => {
 const searchBy = ref("title");
 const searchText = ref("");
 const selectedGenre = ref("")
+const successMessage = ref("");
+const showSuccessMessage = ref(false);
 const paginateFunction = (index: number) => {
 
     let pageUrl = window.location.href.toString();
@@ -38,10 +40,7 @@ const paginateFunction = (index: number) => {
 }
 
 const searchBook = () => {
-    console.log(searchBy.value);
-    console.log("search text ")
-    console.log(searchText.value)
-    // return;
+
     let pageUrl = window.location.href.toString();
     let pageNumber: number = 1;
     //   processs to get the existing page number
@@ -82,11 +81,57 @@ const isSearchClear = computed(() => {
         return false;
     }
 })
+interface SuccessMessageType {
+    message: {
+        message_id: string;
+        success: string;
+    };
+}
+const borrowBook = (bookId: string) => {
+    // alert("hey")
+    // return;
+    const objectToSent = {
+        book_id: "D1002"
+    };
+    router.post(route("borrowBook"), objectToSent);
+}
+const page = usePage()
+const message = computed(() => {
+    if (page.props.flash) {
+        const flash = page.props.flash as SuccessMessageType;
+        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success") {
+            successMessage.value = flash.message["message_id"]
+            showSuccessMessage.value = true;
+        }
+    }
+});
+watch(page, () => {
+    console.log(page.props.flash)
+    if (page.props.flash) {
+        const flash = page.props.flash as SuccessMessageType;
+        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success" && flash.message["success"]  ) {
+            successMessage.value = flash.message["success"]  ;
+            showSuccessMessage.value = true;
+        }
+    }
+})
+
+const clearSuccessMessage = () => {
+    successMessage.value = "";
+    showSuccessMessage.value = false;
+}
 </script>
 
 <template>
     <!-- container -->
     <div class="flex flex-col min-h-screen p-4 bg-gray-100 gap-y-2 gap-x-2 text-mainTheme">
+        <div v-if="showSuccessMessage"
+            class="absolute top-0 left-0 flex flex-col items-center justify-center w-full min-h-screen bg-transparent backdrop-blur-sm">
+            <div class="text-2xl">
+                {{ successMessage }}
+            </div>
+            <button class="px-3 py-2 mt-2 text-white rounded-md bg-secondaryTheme" @click="clearSuccessMessage">Clear</button>
+        </div>
         <h1 class="text-xl font-bold">Browse Books</h1>
         <div class="flex flex-col items-center p-3 bg-white rounded-md gap-y-3 md:flex-row md:gap-x-6">
             <div class="flex flex-row items-center md:flex-row gap-x-2">
@@ -123,10 +168,12 @@ const isSearchClear = computed(() => {
                         <th class="p-4 text-left">Title</th>
                         <th class="p-4 text-left">Description</th>
                         <th class="p-4 text-left">Genre</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b" v-for="book in data" :key="book.id">
+                    <tr class="border-b cursor-pointer" v-for="book in data" :key="book.id"
+                        @click="borrowBook(book.id)">
                         <td class="p-4 text-left">{{ book.id }}</td>
                         <td class="p-4 text-left">{{ book.title }}</td>
                         <td class="p-4 text-left">{{ book.description }}</td>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookAccessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserBookManagementController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegisterController;
 use App\Http\Middleware\EnsureUserIsLoggedIn;
@@ -25,6 +26,7 @@ use Inertia\Inertia;
 
 Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
     Route::get('/retrieve-books', [BookAccessController::class, 'retrieveBooks'])->name('retrieveBooks');
+    Route::post('/borrow-book', [UserBookManagementController::class, 'borrowBookToUser'])->name('borrowBook');
 });
 
 // Route::middleware('auth')->group(function () {
