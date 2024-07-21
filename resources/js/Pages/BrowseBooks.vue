@@ -56,10 +56,10 @@ const searchBook = () => {
         search_genre?: string,
         page?: number,
     } = {};
-    if (searchBy.value === "title") {
+    if (searchBy.value === "title" && searchText.value != "") {
         objectToSent.search_title = searchText.value
     }
-    if (searchBy.value === "description") {
+    if (searchBy.value === "description " && searchText.value != "") {
         objectToSent.search_description = searchText.value
     }
     if (selectedGenre.value != "") {
@@ -188,7 +188,9 @@ const clearSuccessMessage = () => {
                             <td class="p-4 text-left">{{ book.title }}</td>
                             <td class="p-4 text-left">{{ book.description }}</td>
                             <td class="p-4 text-left">{{ book.book_genre }}</td>
-                            <td class="p-4 text-left"><button class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme" @click="borrowBook(book.id)">Borrow</button></td>
+                            <td class="p-4 text-left"><button
+                                    class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme"
+                                    @click="borrowBook(book.id)">Borrow</button></td>
                         </tr>
                     </tbody>
                 </table>

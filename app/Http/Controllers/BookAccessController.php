@@ -97,7 +97,7 @@ class BookAccessController extends Controller
             array_push($bookGenreArray, $array);
         }
 
-        return Inertia::render('Home', [
+        return Inertia::render('BrowseBooks', [
 
             "page_number" => $receivedPageNumber,
             "total_pages" => $totalPages,

@@ -17,7 +17,7 @@ class HomeController extends Controller
     //
     public function init()
     {
-        return Inertia::render('Home');
+        return Inertia::render('BrowseBooks');
     }
 
     

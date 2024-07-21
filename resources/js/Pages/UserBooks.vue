@@ -56,20 +56,20 @@ const searchBook = () => {
         search_genre?: string,
         page?: number,
     } = {};
-    if (searchBy.value === "title") {
+    if (searchBy.value === "title" && searchText.value != "") {
         objectToSent.search_title = searchText.value
     }
-    if (searchBy.value === "description") {
+    if (searchBy.value === "description "  && searchText.value != "") {
         objectToSent.search_description = searchText.value
     }
     if (selectedGenre.value != "") {
         objectToSent.search_genre = selectedGenre.value
     }
     objectToSent.page = pageNumber;
-    router.get(route("retrieveBooks"), objectToSent);
+    router.get(route("retrieveBorrowedBooks"), objectToSent);
 }
 const clearSearchText = () => {
-    router.get(route("retrieveBooks"));
+    router.get(route("retrieveBorrowedBooks"));
 }
 // check if the url has no parameters
 const isSearchClear = computed(() => {
@@ -87,24 +87,15 @@ interface SuccessMessageType {
         success: string;
     };
 }
-const borrowBook = (bookId: string) => {
-    // alert("hey")
-    // return;
+const returnBook = (bookId: string) => {
+  
     const objectToSent = {
-        book_id: "D1002"
+        book_id: bookId
     };
     router.post(route("borrowBook"), objectToSent);
 }
 const page = usePage()
-const message = computed(() => {
-    if (page.props.flash) {
-        const flash = page.props.flash as SuccessMessageType;
-        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success") {
-            successMessage.value = flash.message["message_id"]
-            showSuccessMessage.value = true;
-        }
-    }
-});
+
 watch(page, () => {
     console.log(page.props.flash)
     if (page.props.flash) {
@@ -129,6 +120,7 @@ const clearSuccessMessage = () => {
         <div class="flex flex-row justify-start px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
             <a :href="route('retrieveBooks')">Browse Books</a>
             <a :href="route('retrieveBorrowedBooks')">My Books</a>
+            <span @click="logout">Log out</span>
         </div>
 
         <div class="p-4">
@@ -140,7 +132,7 @@ const clearSuccessMessage = () => {
                 <button class="px-3 py-2 mt-2 text-white rounded-md bg-secondaryTheme"
                     @click="clearSuccessMessage">Clear</button>
             </div>
-            <h1 class="text-xl font-bold">Browse Books</h1>
+            <h1 class="text-xl font-bold">View Borrowed Books</h1>
             <div class="flex flex-col items-center p-3 bg-white rounded-md gap-y-3 md:flex-row md:gap-x-6">
                 <div class="flex flex-row items-center md:flex-row gap-x-2">
                     <span>Search By</span>
@@ -189,7 +181,7 @@ const clearSuccessMessage = () => {
                             <td class="p-4 text-left">{{ book.book_genre }}</td>
                             <td class="p-4 text-left"><button
                                     class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme"
-                                    @click="borrowBook(book.id)">Borrow</button></td>
+                                    @click="returnBook(book.id)">Return</button></td>
                         </tr>
                     </tbody>
                 </table>
