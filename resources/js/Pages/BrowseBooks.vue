@@ -59,7 +59,7 @@ const searchBook = () => {
     if (searchBy.value === "title" && searchText.value != "") {
         objectToSent.search_title = searchText.value
     }
-    if (searchBy.value === "description " && searchText.value != "") {
+    if (searchBy.value === "description" && searchText.value != "") {
         objectToSent.search_description = searchText.value
     }
     if (selectedGenre.value != "") {
@@ -148,9 +148,16 @@ const clearSuccessMessage = () => {
                     <select class="rounded-md shadow-sm border-mainTheme" v-model="searchBy">
                         <option value="title">Title</option>
                         <option value="description">Description</option>
+                        <option value="genre">genre</option>
                     </select>
                 </div>
-                <input class="rounded-md shadow-sm border-mainTheme" v-model="searchText" type="text">
+                <select v-if="searchBy==='genre'" class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
+                    <option value="">None</option>
+                    <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
+                        {{ genre.name }}
+                    </option>
+                </select>
+                <input v-else class="rounded-md shadow-sm border-mainTheme" v-model="searchText" type="text">
                 <button class="px-3 py-2 font-bold text-white rounded-md bg-secondaryTheme"
                     @click="searchBook">Search</button>
 
@@ -161,12 +168,7 @@ const clearSuccessMessage = () => {
                 <span class="font-thin">
                     Select Book Genre
                 </span>
-                <select class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
-                    <option value="">None</option>
-                    <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
-                        {{ genre.name }}
-                    </option>
-                </select>
+
             </div>
             <!-- table to display the book details -->
             <div v-if="data" class="overflow-x-auto">
