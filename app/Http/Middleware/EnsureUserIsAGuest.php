@@ -18,7 +18,7 @@ class EnsureUserIsAGuest
         if (!Auth::check()) {
             return $next($request);
         } else {
-            return redirect()->intended('retrieve-books');
+            return redirect()->intended('browse-books');
         }
     }
 }

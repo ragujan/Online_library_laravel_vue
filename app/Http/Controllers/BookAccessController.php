@@ -15,7 +15,7 @@ class BookAccessController extends Controller
 {
     private $itemsPerPage = 3;
 
-    public function retrieveBooks(Request $request)
+    public function browseBooks(Request $request)
     {
 
 

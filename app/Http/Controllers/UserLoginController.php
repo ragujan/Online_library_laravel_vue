@@ -27,7 +27,7 @@ class UserLoginController extends Controller
 
         $request->authenticate();
         $request->session()->regenerate();
-        return redirect()->intended(route('retrieveBooks', absolute: false));
+        return redirect()->intended(route('browseBooks', absolute: false));
     }
     public function destroy(Request $request): RedirectResponse
     {

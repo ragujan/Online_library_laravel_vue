@@ -66,10 +66,10 @@ const searchBook = () => {
         objectToSent.search_genre = selectedGenre.value
     }
     objectToSent.page = pageNumber;
-    router.get(route("retrieveBooks"), objectToSent);
+    router.get(route("browseBooks"), objectToSent);
 }
 const clearSearchText = () => {
-    router.get(route("retrieveBooks"));
+    router.get(route("browseBooks"));
 }
 // check if the url has no parameters
 const isSearchClear = computed(() => {
@@ -130,7 +130,7 @@ const user = computed(() => page.props.auth.user)
         <div class="flex flex-row items-center justify-between px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
 
             <div class="flex flex-row justify-start px-3 font-bold text-white gap-x-5 bg-secondaryTheme">
-                <a :href="route('retrieveBooks')">Browse Books</a>
+                <a :href="route('browseBooks')">Browse Books</a>
                 <a :href="route('retrieveBorrowedBooks')">My Books</a>
                 <span @click="logout" class="cursor-pointer">Log out</span>
             </div>

@@ -25,7 +25,7 @@ use Inertia\Inertia;
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
-    Route::get('/retrieve-books', [BookAccessController::class, 'retrieveBooks'])->name('retrieveBooks');
+    Route::get('/browse-books', [BookAccessController::class, 'browseBooks'])->name('browseBooks');
     Route::post('/borrow-book', [UserBookManagementController::class, 'borrowBookToUser'])->name('borrowBook');
     Route::get('/retrieve-borrowed-books', [BookAccessController::class, 'retrieveBorrowedBooks'])->name('retrieveBorrowedBooks');
     Route::post('/return-book', [UserBookManagementController::class, 'returnBook'])->name('returnBook');
