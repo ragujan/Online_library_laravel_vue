@@ -85,51 +85,59 @@ const isSearchClear = computed(() => {
 </script>
 
 <template>
-    <h1>Browse Books</h1>
+    <!-- container -->
+    <div class="flex flex-col min-h-screen p-4 bg-gray-100 gap-y-2 gap-x-2 text-mainTheme">
+        <h1 class="text-xl font-bold">Browse Books</h1>
+        <div class="flex flex-col items-center p-3 bg-white rounded-md gap-y-3 md:flex-row md:gap-x-6">
+            <div class="flex flex-row items-center md:flex-row gap-x-2">
+                <span>Search By</span>
+                <select class="rounded-md shadow-sm border-mainTheme" v-model="searchBy">
+                    <option value="title">Title</option>
+                    <option value="description">Description</option>
+                </select>
+            </div>
+            <input class="rounded-md shadow-sm border-mainTheme" v-model="searchText" type="text">
+            <button class="px-3 py-2 font-bold text-white rounded-md bg-secondaryTheme"
+                @click="searchBook">Search</button>
 
-
-    <div>
-        <span>Search By</span>
-        <select v-model="searchBy">
-            <option value="title">Title</option>
-            <option value="description">Description</option>
-        </select>
-        <input v-model="searchText" type="text">
-        <button @click="searchBook">Search</button>
-
-        <button v-if="!isSearchClear" @click="clearSearchText">clear</button>
+            <button class="px-3 py-2 font-bold underline rounded-md " v-if="!isSearchClear"
+                @click="clearSearchText">clear</button>
+        </div>
+        <div class="flex flex-col items-center p-3 bg-white rounded-md md:flex-row md:gap-x-6">
+            <span class="font-thin">
+                Select Book Genre
+            </span>
+            <select class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
+                <option value="">None</option>
+                <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
+                    {{ genre.name }}
+                </option>
+            </select>
+        </div>
+        <!-- table to display the book details -->
+        <div v-if="data" class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="border-b border-mainTheme">
+                    <tr>
+                        <th class="p-4 text-left">ID</th>
+                        <th class="p-4 text-left">Title</th>
+                        <th class="p-4 text-left">Description</th>
+                        <th class="p-4 text-left">Genre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b" v-for="book in data" :key="book.id">
+                        <td class="p-4 text-left">{{ book.id }}</td>
+                        <td class="p-4 text-left">{{ book.title }}</td>
+                        <td class="p-4 text-left">{{ book.description }}</td>
+                        <td class="p-4 text-left">{{ book.book_genre }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-center">
+            <PaginationButton :itemsPerPage="3" :lastPage="props.total_pages" :onClickFunction="paginateFunction"
+                :currentPage="Number(props.page_number)" />
+        </div>
     </div>
-    <div>
-        <span>
-            Select Book Genre
-        </span>
-        <select v-model="selectedGenre">
-            <option value="">None</option>
-            <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
-                {{ genre.name }}
-            </option>
-        </select>
-    </div>
-    <div v-if="data">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Genre</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="book in data" :key="book.id">
-                    <td>{{ book.id }}</td>
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.description }}</td>
-                    <td>{{ book.book_genre }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <PaginationButton :itemsPerPage="3" :lastPage="props.total_pages" :onClickFunction="paginateFunction"
-        :currentPage="Number(props.page_number)" />
 </template>

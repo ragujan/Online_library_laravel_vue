@@ -52,6 +52,7 @@ class BookAccessController extends Controller
             $isGenreReceived = true;
         }
         $model = new Book();
+        $model = $model->where('is_taken',false);
 
         if ($isTitleReceived) {
             $searchTitle = $request->search_title;
