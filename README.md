@@ -14,7 +14,7 @@ Tech Stack
 - Tailwind CSS
 
 ## Initial Start 
-You have to register as a user [User Register](http://127.0.0.1:8000/signup). After the first registration, you will be logged in automatically. As a registered, authenticated user, you will have access to browse books and view borrowed books.
+You have to register as a user [User Register](http://127.0.0.1:8000/signup). After the first registration, you will be logged in automatically. As a registered, authenticated user, you will have access to browse books and view borrowed books.They can return the book from the borrwed books section.
 [Browse Books](http://127.0.0.1:8000/browse-books)
 [Borrowed Books](http://127.0.0.1:8000/retrieve-borrowed-books)
 
