@@ -109,8 +109,8 @@ watch(page, () => {
     console.log(page.props.flash)
     if (page.props.flash) {
         const flash = page.props.flash as SuccessMessageType;
-        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success" && flash.message["success"]  ) {
-            successMessage.value = flash.message["success"]  ;
+        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success" && flash.message["success"]) {
+            successMessage.value = flash.message["success"];
             showSuccessMessage.value = true;
         }
     }
@@ -124,67 +124,78 @@ const clearSuccessMessage = () => {
 
 <template>
     <!-- container -->
-    <div class="flex flex-col min-h-screen p-4 bg-gray-100 gap-y-2 gap-x-2 text-mainTheme">
-        <div v-if="showSuccessMessage"
-            class="absolute top-0 left-0 flex flex-col items-center justify-center w-full min-h-screen bg-transparent backdrop-blur-sm">
-            <div class="text-2xl">
-                {{ successMessage }}
-            </div>
-            <button class="px-3 py-2 mt-2 text-white rounded-md bg-secondaryTheme" @click="clearSuccessMessage">Clear</button>
+    <div class="flex flex-col min-h-screen bg-gray-100 gap-y-2 gap-x-2 text-mainTheme">
+        <!-- navbar -->
+        <div class="flex flex-row justify-start px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
+            <a :href="route('retrieveBooks')">Browse Books</a>
+            <a :href="route('retrieveBooks')">My Books</a>
         </div>
-        <h1 class="text-xl font-bold">Browse Books</h1>
-        <div class="flex flex-col items-center p-3 bg-white rounded-md gap-y-3 md:flex-row md:gap-x-6">
-            <div class="flex flex-row items-center md:flex-row gap-x-2">
-                <span>Search By</span>
-                <select class="rounded-md shadow-sm border-mainTheme" v-model="searchBy">
-                    <option value="title">Title</option>
-                    <option value="description">Description</option>
+
+        <div class="p-4">
+            <div v-if="showSuccessMessage"
+                class="absolute top-0 left-0 flex flex-col items-center justify-center w-full min-h-screen bg-transparent backdrop-blur-sm">
+                <div class="text-2xl">
+                    {{ successMessage }}
+                </div>
+                <button class="px-3 py-2 mt-2 text-white rounded-md bg-secondaryTheme"
+                    @click="clearSuccessMessage">Clear</button>
+            </div>
+            <h1 class="text-xl font-bold">Browse Books</h1>
+            <div class="flex flex-col items-center p-3 bg-white rounded-md gap-y-3 md:flex-row md:gap-x-6">
+                <div class="flex flex-row items-center md:flex-row gap-x-2">
+                    <span>Search By</span>
+                    <select class="rounded-md shadow-sm border-mainTheme" v-model="searchBy">
+                        <option value="title">Title</option>
+                        <option value="description">Description</option>
+                    </select>
+                </div>
+                <input class="rounded-md shadow-sm border-mainTheme" v-model="searchText" type="text">
+                <button class="px-3 py-2 font-bold text-white rounded-md bg-secondaryTheme"
+                    @click="searchBook">Search</button>
+
+                <button class="px-3 py-2 font-bold underline rounded-md " v-if="!isSearchClear"
+                    @click="clearSearchText">clear</button>
+            </div>
+            <div class="flex flex-col items-center p-3 bg-white rounded-md md:flex-row md:gap-x-6">
+                <span class="font-thin">
+                    Select Book Genre
+                </span>
+                <select class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
+                    <option value="">None</option>
+                    <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
+                        {{ genre.name }}
+                    </option>
                 </select>
             </div>
-            <input class="rounded-md shadow-sm border-mainTheme" v-model="searchText" type="text">
-            <button class="px-3 py-2 font-bold text-white rounded-md bg-secondaryTheme"
-                @click="searchBook">Search</button>
+            <!-- table to display the book details -->
+            <div v-if="data" class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg">
+                    <thead class="border-b border-mainTheme">
+                        <tr>
+                            <th class="p-4 text-left">ID</th>
+                            <th class="p-4 text-left">Title</th>
+                            <th class="p-4 text-left">Description</th>
+                            <th class="p-4 text-left">Genre</th>
+                            <th class="p-4 text-left">Borrow</th>
 
-            <button class="px-3 py-2 font-bold underline rounded-md " v-if="!isSearchClear"
-                @click="clearSearchText">clear</button>
-        </div>
-        <div class="flex flex-col items-center p-3 bg-white rounded-md md:flex-row md:gap-x-6">
-            <span class="font-thin">
-                Select Book Genre
-            </span>
-            <select class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
-                <option value="">None</option>
-                <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
-                    {{ genre.name }}
-                </option>
-            </select>
-        </div>
-        <!-- table to display the book details -->
-        <div v-if="data" class="overflow-x-auto">
-            <table class="min-w-full bg-white rounded-lg">
-                <thead class="border-b border-mainTheme">
-                    <tr>
-                        <th class="p-4 text-left">ID</th>
-                        <th class="p-4 text-left">Title</th>
-                        <th class="p-4 text-left">Description</th>
-                        <th class="p-4 text-left">Genre</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b cursor-pointer" v-for="book in data" :key="book.id"
-                        @click="borrowBook(book.id)">
-                        <td class="p-4 text-left">{{ book.id }}</td>
-                        <td class="p-4 text-left">{{ book.title }}</td>
-                        <td class="p-4 text-left">{{ book.description }}</td>
-                        <td class="p-4 text-left">{{ book.book_genre }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="flex justify-center">
-            <PaginationButton :itemsPerPage="3" :lastPage="props.total_pages" :onClickFunction="paginateFunction"
-                :currentPage="Number(props.page_number)" />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b " v-for="book in data" :key="book.id">
+                            <td class="p-4 text-left">{{ book.id }}</td>
+                            <td class="p-4 text-left">{{ book.title }}</td>
+                            <td class="p-4 text-left">{{ book.description }}</td>
+                            <td class="p-4 text-left">{{ book.book_genre }}</td>
+                            <td class="p-4 text-left"><button class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme" @click="borrowBook(book.id)">Borrow</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-center">
+                <PaginationButton :itemsPerPage="3" :lastPage="props.total_pages" :onClickFunction="paginateFunction"
+                    :currentPage="Number(props.page_number)" />
+            </div>
         </div>
     </div>
 </template>
