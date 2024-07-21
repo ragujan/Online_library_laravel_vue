@@ -92,7 +92,7 @@ const returnBook = (bookId: string) => {
     const objectToSent = {
         book_id: bookId
     };
-    router.post(route("borrowBook"), objectToSent);
+    router.post(route("returnBook"), objectToSent);
 }
 const page = usePage()
 
@@ -100,7 +100,7 @@ watch(page, () => {
     console.log(page.props.flash)
     if (page.props.flash) {
         const flash = page.props.flash as SuccessMessageType;
-        if (flash.message && flash.message["message_id"] === "user_borrowed_book_success" && flash.message["success"]) {
+        if (flash.message && flash.message["message_id"] === "user_returned_book_success" && flash.message["success"]) {
             successMessage.value = flash.message["success"];
             showSuccessMessage.value = true;
         }

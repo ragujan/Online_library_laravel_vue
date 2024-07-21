@@ -28,6 +28,7 @@ Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
     Route::get('/retrieve-books', [BookAccessController::class, 'retrieveBooks'])->name('retrieveBooks');
     Route::post('/borrow-book', [UserBookManagementController::class, 'borrowBookToUser'])->name('borrowBook');
     Route::get('/retrieve-borrowed-books', [BookAccessController::class, 'retrieveBorrowedBooks'])->name('retrieveBorrowedBooks');
+    Route::post('/return-book', [UserBookManagementController::class, 'returnBook'])->name('returnBook');
 });
 
 // Route::middleware('auth')->group(function () {
