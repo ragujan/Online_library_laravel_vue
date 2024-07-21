@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,16 @@ class UserLoginController extends Controller
 
         $request->authenticate();
         $request->session()->regenerate();
-        return redirect()->intended(route('retrieve-books', absolute: false));
+        return redirect()->intended(route('retrieveBooks', absolute: false));
     }
+    public function destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
 
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
 }

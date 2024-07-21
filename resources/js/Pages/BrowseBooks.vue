@@ -120,16 +120,24 @@ const clearSuccessMessage = () => {
     successMessage.value = "";
     showSuccessMessage.value = false;
 }
+const user = computed(() => page.props.auth.user)
 </script>
 
 <template>
     <!-- container -->
     <div class="flex flex-col min-h-screen bg-gray-100 gap-y-2 gap-x-2 text-mainTheme">
         <!-- navbar -->
-        <div class="flex flex-row justify-start px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
-            <a :href="route('retrieveBooks')">Browse Books</a>
-            <a :href="route('retrieveBorrowedBooks')">My Books</a>
-            <span @click="logout">Log out</span>
+        <div class="flex flex-row items-center justify-between px-3 py-2 font-bold text-white gap-x-5 bg-secondaryTheme">
+
+            <div class="flex flex-row justify-start px-3 font-bold text-white gap-x-5 bg-secondaryTheme">
+                <a :href="route('retrieveBooks')">Browse Books</a>
+                <a :href="route('retrieveBorrowedBooks')">My Books</a>
+                <span @click="logout" class="cursor-pointer">Log out</span>
+            </div>
+
+            <div v-if="user">
+                <span>{{ user.name }}</span>
+            </div>
         </div>
 
         <div class="p-4">
@@ -151,7 +159,7 @@ const clearSuccessMessage = () => {
                         <option value="genre">genre</option>
                     </select>
                 </div>
-                <select v-if="searchBy==='genre'" class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
+                <select v-if="searchBy === 'genre'" class="rounded-md shadow-sm border-mainTheme" v-model="selectedGenre">
                     <option value="">None</option>
                     <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
                         {{ genre.name }}
