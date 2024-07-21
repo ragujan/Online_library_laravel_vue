@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
-import { BookData } from '@/types';
+import { BookData, BookGenre } from '@/types';
 import PaginationButton from '@/Components/PaginationButtonSection.vue';
 import { computed, ref } from 'vue';
 
-const props = defineProps<{ data: BookData[], total_pages: number, page_number: number }>();
+const props = defineProps<{ data: BookData[], book_genres: BookGenre[], total_pages: number, page_number: number }>();
 const logout = () => {
     router.post(route("logout"), {
 
@@ -17,10 +17,8 @@ const logout = () => {
 
 const searchBy = ref("title");
 const searchText = ref("");
-const isUrlClean = ref(true);
+const selectedGenre = ref("")
 const paginateFunction = (index: number) => {
-    //   alert("hey "+index)
-    // const routeName = "retrieveBooks";
 
     let pageUrl = window.location.href.toString();
 
@@ -56,6 +54,7 @@ const searchBook = () => {
     const objectToSent: {
         search_title?: string,
         search_description?: string,
+        search_genre?: string,
         page?: number,
     } = {};
     if (searchBy.value === "title") {
@@ -64,12 +63,16 @@ const searchBook = () => {
     if (searchBy.value === "description") {
         objectToSent.search_description = searchText.value
     }
+    if (selectedGenre.value != "") {
+        objectToSent.search_genre = selectedGenre.value
+    }
     objectToSent.page = pageNumber;
     router.get(route("retrieveBooks"), objectToSent);
 }
 const clearSearchText = () => {
     router.get(route("retrieveBooks"));
 }
+// check if the url has no parameters
 const isSearchClear = computed(() => {
     let pageUrl = window.location.href.toString();
     const parsedUrl = new URL(pageUrl);
@@ -83,7 +86,7 @@ const isSearchClear = computed(() => {
 
 <template>
     <h1>Browse Books</h1>
- 
+
 
     <div>
         <span>Search By</span>
@@ -95,6 +98,17 @@ const isSearchClear = computed(() => {
         <button @click="searchBook">Search</button>
 
         <button v-if="!isSearchClear" @click="clearSearchText">clear</button>
+    </div>
+    <div>
+        <span>
+            Select Book Genre
+        </span>
+        <select v-model="selectedGenre">
+            <option value="">None</option>
+            <option v-for="genre in book_genres" :key="genre.id" :value="genre.name">
+                {{ genre.name }}
+            </option>
+        </select>
     </div>
     <div v-if="data">
         <table>

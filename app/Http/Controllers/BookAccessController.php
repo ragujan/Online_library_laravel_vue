@@ -81,11 +81,24 @@ class BookAccessController extends Controller
             ];
             array_push($templateArray, $array);
         }
+
+        $bookGenres = BookGenre::get();
+        $bookGenreArray = [];
+
+        foreach ($bookGenres as $genre) {
+            $array = [
+                "id" => $genre->id,
+                'name' => $genre->name,
+            ];
+            array_push($bookGenreArray,$array);
+        }
+
         return Inertia::render('Home', [
 
             "page_number" => $receivedPageNumber,
             "total_pages" => $totalPages,
-            'data' => $templateArray
+            'data' => $templateArray,
+            'book_genres'=>$bookGenreArray
         ]);
     }
 

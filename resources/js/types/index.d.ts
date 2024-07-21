@@ -12,7 +12,10 @@ export interface BookData{
     description:string;
     book_genre:string;
 }
-
+export interface BookGenre{
+    id:string;
+    name:string;
+}
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
