@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\BookAccessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegisterController;
+use App\Http\Middleware\EnsureUserIsLoggedIn;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,7 +23,9 @@ use Inertia\Inertia;
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::middleware([EnsureUserIsLoggedIn::class])->group(function () {
+    Route::get('/retrieve-books', [BookAccessController::class, 'retrieveBooks'])->name('retrieveBooks');
+});
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

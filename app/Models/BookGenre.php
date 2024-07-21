@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BookGenre extends Model
-{
+{    public $timestamps = false;
     use HasFactory;
     protected $table = "book_genre";
     protected $fillable = [

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Book extends Model
-{
+{    public $timestamps = false;
     use HasFactory;
     protected $table = "book";
     protected $fillable = [
@@ -19,7 +19,7 @@ class Book extends Model
     ];
 
     public function bookGenre():BelongsTo{
-        return $this->belongsTo(BookGenre::class,"book_genre+id");
+        return $this->belongsTo(BookGenre::class,"book_genre_id");
     }
 
 }
