@@ -25,7 +25,14 @@ You have to register as a user [User Register](http://127.0.0.1:8000/signup). Af
 - **user_took_book**
 
 
+## users
+### User 1
+- **Email:** rag@gmail.com
+- **Password:** ragbagrag
 
+### User 2
+- **Email:** taker@gmail.com
+- **Password:** ragbagrag
 
 
 
