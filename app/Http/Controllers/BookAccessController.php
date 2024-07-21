@@ -82,6 +82,7 @@ class BookAccessController extends Controller
                 'book_genre' => $item->bookGenre->name,
                 'title' => $item->title,
                 'description' => $item->description,
+                'price'=>$item->price,
             ];
             array_push($templateArray, $array);
         }
@@ -188,6 +189,7 @@ class BookAccessController extends Controller
                 'book_genre' => $item->book->bookGenre->name,
                 'title' => $item->book->title,
                 'description' => $item->book->description,
+                'price'=>$item->book->price,
             ];
             array_push($templateArray, $array);
         }

@@ -149,6 +149,7 @@ const user = computed(() => page.props.auth.user)
                         <option value="title">Title</option>
                         <option value="description">Description</option>
                         <option value="genre">genre</option>
+                        
                     </select>
                 </div>
                 <select v-if="searchBy === 'genre'" class="rounded-md shadow-sm border-mainTheme"
@@ -176,6 +177,7 @@ const user = computed(() => page.props.auth.user)
                             <th class="p-4 text-left">Title</th>
                             <th class="p-4 text-left">Description</th>
                             <th class="p-4 text-left">Genre</th>
+                            <th class="p-4 text-left">Price</th>
                             <th class="p-4 text-left">Return</th>
 
 
@@ -187,6 +189,7 @@ const user = computed(() => page.props.auth.user)
                             <td class="p-4 text-left">{{ book.title }}</td>
                             <td class="p-4 text-left">{{ book.description }}</td>
                             <td class="p-4 text-left">{{ book.book_genre }}</td>
+                            <td class="p-4 text-left">{{ book.price }}</td>
                             <td class="p-4 text-left"><button
                                     class="px-1 py-1 rounded-md cursor-pointer bg-lightTheme text-mainTheme"
                                     @click="returnBook(book.id)">Return</button></td>

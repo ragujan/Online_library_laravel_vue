@@ -15,6 +15,7 @@ class Book extends Model
         'title',
         'description',
         'book_genre_id',
+        'price',
         'is_taken'
     ];
 

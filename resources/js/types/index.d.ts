@@ -11,6 +11,7 @@ export interface BookData{
     title:string;
     description:string;
     book_genre:string;
+    price?:string
 }
 export interface BookGenre{
     id:string;
